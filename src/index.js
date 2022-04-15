@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Exercise from "./pages/exercise/Exercise";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,7 +13,7 @@ root.render(
       <Routes>
         <Route path="/" element={ <App />}>
           <Route path="introduction" element={<p>introduction</p>} />
-          <Route path="exercises/:exerciseId" element={<p>exercise</p>} />
+          <Route path="exercises/:exerciseId" element={<Exercise />} />
           <Route
             path="*"
             element={
