@@ -11,6 +11,7 @@ function Exercise() {
 
     // Daten anzeigen
     return (
+        //TODO: add react bootstrap
         <div>
             Das sollen die Daten sein:
             {daten}
