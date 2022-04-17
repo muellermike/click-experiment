@@ -1,11 +1,11 @@
+import "./Exercise.css";
 import { useEffect } from "react";
-import { Accordion, Button, Card, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Accordion, Col, Container, Row } from "react-bootstrap";
+import QuestionImage from "../../components/QuestionImage/QuestionImage";
+import AnswerForm from "../../components/AnswerForm/AnswerForm";
 //import { MicRecorder } from "mic-recorder-to-mp3";
 
 function Exercise() {
-    let daten = [
-        { question: "Which side has more dots?", img: ""}
-    ];
 
     // lade Daten von einem API
     useEffect(() => {
@@ -26,36 +26,11 @@ function Exercise() {
         <div>
             <Container>
                 <Row className="Container-Row">
-                    <Col xs={5}>
-                        <Card>
-                            <Card.Body>
-                                <Card.Text>
-                                    {daten[0].question}
-                                </Card.Text>
-                            </Card.Body>
-                            <Card.Img variant="bottom" src={daten[0].img} />
-                        </Card>
+                    <Col xs={7}>
+                        <QuestionImage />
                     </Col>
-                    <Col>
-                        <Form>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Answer</Form.Label>
-                                <Button variant="success"><i className="fa fa-microphone" /></Button>{' '}
-                                <Form.Text className="text-muted">
-                                We'll never share your voice inputwith anyone else.
-                                </Form.Text>
-                            </Form.Group>
-                            <Button variant="primary" disabled type="submit">
-                                <Spinner
-                                as="span"
-                                animation="border"
-                                size="sm"
-                                role="status"
-                                aria-hidden="true"
-                                />
-                                Loading...
-                            </Button>
-                        </Form>
+                    <Col className="Container-Col">
+                        <AnswerForm />
                     </Col>
                 </Row>
             </Container>
