@@ -16,6 +16,7 @@
 
 .App-body {
   min-height: 100%;
+  margin: 25px;
 }
 
 .App-footer {
