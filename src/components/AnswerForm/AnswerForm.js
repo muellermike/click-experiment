@@ -12,6 +12,7 @@ function AnswerForm(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         let parsedId = parseInt(params.exerciseId);
+        setRecorded(false);
         navigate("/exercises/" + (parsedId+1));
     }
 
