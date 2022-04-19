@@ -4,7 +4,6 @@ import { Col, Container, Row } from "react-bootstrap";
 import QuestionImage from "../../components/QuestionImage/QuestionImage";
 import AnswerForm from "../../components/AnswerForm/AnswerForm";
 import ExperimentDescription from "../../components/ExperimentDescription/ExperimentDescription";
-//import { MicRecorder } from "mic-recorder-to-mp3";
 
 function Exercise() {
 

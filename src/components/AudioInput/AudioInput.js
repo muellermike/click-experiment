@@ -5,6 +5,10 @@ import { HiOutlineMicrophone, HiOutlinePause } from "react-icons/hi";
 import { Outlet } from 'react-router-dom';
 import MicRecorder from "mic-recorder-to-mp3";
 
+/*
+*   Functionality implemented as: https://medium.com/front-end-weekly/recording-audio-in-mp3-using-reactjs-under-5-minutes-5e960defaf10
+*   https://github.com/Matheswaaran/react-mp3-audio-recording/blob/master/src/App.js
+*/
 class AudioInput extends React.Component {
     constructor(props){
         super(props);
@@ -19,6 +23,7 @@ class AudioInput extends React.Component {
             isBlocked: false
         };
 
+        // bind methods to the current state
         this.removeActivity = this.removeActivity.bind(this);
         this.startRecording = this.startRecording.bind(this);
         this.stopRecording = this.stopRecording.bind(this);
@@ -29,9 +34,14 @@ class AudioInput extends React.Component {
         this.props.remove(aId);
     }
 
+    /*
+    *   Start recording the audio when the user has the permission to do so.
+    *   Otherwise ask for permission again.
+    */
     startRecording() {
         if (this.state.isBlocked) {
             console.log('Permission Denied');
+            this.checkAudioPermission();
           } else {
               console.log("Recording started");
               this.Mp3Recorder
@@ -42,6 +52,10 @@ class AudioInput extends React.Component {
           }
     }
 
+    /*
+    *   Stop recording and store blob into URL in current state
+    *   TODO: make blob / buffer storable in API
+    */
     stopRecording() {
         console.log("Recording stopped.");
         this.Mp3Recorder
@@ -50,10 +64,14 @@ class AudioInput extends React.Component {
             .then(([buffer, blob]) => {
                 const blobURL = URL.createObjectURL(blob)
                 this.setState({ blobURL: blobURL, isRecording: false, blob: blob });
+                this.props.toggleAudioRecording();
             }).catch((e) => console.log(e));
     }
-    
-    componentDidMount() {
+
+    /*
+    *   check whether the user has the permission to record audio in browser
+    */
+    checkAudioPermission() {
         // check if the permission for the microphone is allowed in the browser
         navigator.getUserMedia({ audio: true },
             () => {
@@ -65,13 +83,30 @@ class AudioInput extends React.Component {
                 this.setState({ isBlocked: true });
             });
     }
+    
+    /*
+    *   Run steps after component is mounted:
+    *   get permission to record audio in browser
+    */
+    componentDidMount() {
+        // check audio recording permission
+        this.checkAudioPermission()
+    }
 
+    /*
+    *   Play sound recorded before (only if there is a blobURL)
+    */
     playBlob() {
-        let tmp = new Audio(this.state.blobURL);
-        tmp.play();
+        if(this.state.blobURL) {
+            let tmp = new Audio(this.state.blobURL);
+            tmp.play();
+        }
         return "";
     }
 
+    /*
+    *   Eender buttons which show the recording and pause icon
+    */
     render(){
         return (
             <div>

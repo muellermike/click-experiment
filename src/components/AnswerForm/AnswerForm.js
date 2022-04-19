@@ -1,10 +1,23 @@
 import "./AnswerForm.css";
 import { Button, Form, Spinner } from "react-bootstrap";
 import AudioInput from "../AudioInput/AudioInput";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 
 function AnswerForm(props) {
-    //TODO: implement audio recoder functionality: https://medium.com/front-end-weekly/recording-audio-in-mp3-using-reactjs-under-5-minutes-5e960defaf10
-    //https://github.com/Matheswaaran/react-mp3-audio-recording/blob/master/src/App.js
+    const params = useParams();
+    let navigate = useNavigate();
+    const [isRecorded, setRecorded] = useState(false);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        let parsedId = parseInt(params.exerciseId);
+        navigate("/exercises/" + (parsedId+1));
+    }
+
+    const toggleAudioRecording = () => {
+        setRecorded(!isRecorded);    
+    }
 
     // show form to input audio file
     return (
@@ -12,12 +25,12 @@ function AnswerForm(props) {
             <Form className="vertical-center">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Please answer the question with an audio input. Please check your surrounding.</Form.Label><br />
-                    <AudioInput></AudioInput>
+                    <AudioInput toggleAudioRecording={toggleAudioRecording}></AudioInput>
                     <Form.Text className="text-muted">
                         We'll never share your voice input with anyone else.
                     </Form.Text>
                 </Form.Group>
-                <Button variant="primary" disabled type="submit">
+                <Button variant="primary" disabled={!isRecorded} type="submit" onClick={handleSubmit}>
                     { false ? <Spinner
                     as="span"
                     animation="border"
