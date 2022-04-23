@@ -16,17 +16,17 @@ function AnswerForm(props) {
         navigate("/exercises/" + (parsedId+1));
     }
 
-    const toggleAudioRecording = () => {
-        setRecorded(!isRecorded);    
+    const setAudioRecording = (value) => {
+        setRecorded(value);    
     }
 
     // show form to input audio file
     return (
         <div>
             <Form className="vertical-center">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3" controlId="formBasicAudio">
                     <Form.Label>Please answer the question with an audio input. Please check your surrounding.</Form.Label><br />
-                    <AudioInput toggleAudioRecording={toggleAudioRecording}></AudioInput>
+                    <AudioInput setAudioRecording={setAudioRecording}></AudioInput>
                     <Form.Text className="text-muted">
                         We'll never share your voice input with anyone else.
                     </Form.Text>

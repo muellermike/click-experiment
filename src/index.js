@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Exercise from "./pages/exercise/Exercise";
 import Introduction from './pages/introduction/Introduction';
+import ParticipantInfo from './pages/participant/ParticipantInfo';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,6 +15,7 @@ root.render(
       <Routes>
         <Route path="/" element={ <App />}>
           <Route path="introduction" element={<Introduction />} />
+          <Route path="participant" element={<ParticipantInfo />} />
           <Route path="exercises/:exerciseId" element={<Exercise />} />
           <Route
             path="*"

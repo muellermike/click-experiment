@@ -64,7 +64,7 @@ class AudioInput extends React.Component {
             .then(([buffer, blob]) => {
                 const blobURL = URL.createObjectURL(blob)
                 this.setState({ blobURL: blobURL, isRecording: false, blob: blob });
-                this.props.toggleAudioRecording();
+                this.props.setAudioRecording(true);
             }).catch((e) => console.log(e));
     }
 
@@ -112,7 +112,7 @@ class AudioInput extends React.Component {
             <div>
                 {!this.state.isRecording ? <Button variant="success" className="Mic-button" onClick={this.startRecording}><HiOutlineMicrophone size={"2em"} /> </Button> :
                 <Button variant="warning" className="Mic-button" onClick={this.stopRecording}><HiOutlinePause size={"2em"} /> </Button> }
-                { this.state.blobURL ?  <Button onClick={this.playBlob}>play audio</Button> : ""}
+                { this.state.blobURL && this.props.showPlayAudio ?  <Button onClick={this.playBlob}>play audio</Button> : ""}
                 <Outlet />
             </div>
           );
