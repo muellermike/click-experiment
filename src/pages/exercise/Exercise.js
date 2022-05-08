@@ -17,15 +17,15 @@ function Exercise() {
         const requestOptions = {
             mode: 'cors',
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" }
+            headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE }
         };
 
-        fetch('http://localhost:8080/v1/experiments/' + experimentId  + '/15/exercises/next', requestOptions)
+        // load exercise data from the API the first time
+        fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId  + '/15/exercises/next', requestOptions)
         .then(response => response.json())
         .then(data => {
             setExercise(data)
-            console.log(data)}
-            );
+            });
     }, [experimentId]);
 
     const handleSubmit = (recording) => {
@@ -38,7 +38,7 @@ function Exercise() {
                 headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" },
                 body: JSON.stringify({ recording: recording.recording, timeToRecording: recording.timeToRecording, userId: 15, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
             };
-            fetch('http://localhost:8080/v1/recordings', requestOptions)
+            fetch(process.env.REACT_APP_API_BASE_URL + '/recordings', requestOptions)
             .then(response => response.json())
             .then(data =>  {
                 alert("sent recording " + data);
@@ -47,12 +47,12 @@ function Exercise() {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" }
                 };
-        
-                fetch('http://localhost:8080/v1/experiments/' + experimentId  + '/15/exercises/next', requestOptions)
+                
+                // load exercise data from the api the next time
+                fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId  + '/15/exercises/next', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     setExercise(data)
-                    console.log(data)
                 });
             });
         } else {

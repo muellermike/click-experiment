@@ -23,12 +23,12 @@ function ParticipantInfo() {
                 headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" },
                 body: JSON.stringify({ id: 1234, age: ageRecording, gender: genderRecording })
             };
-            fetch('http://localhost:8080/v1/users', requestOptions)
+            fetch(process.env.REACT_APP_API_BASE_URL + '/users', requestOptions)
             .then(response => response.json())
             .then(data =>  {
                 alert("hello " + data);
                 requestOptions.body = JSON.stringify({ user: data, start: new Date()});
-                fetch('http://localhost:8080/v1/experiments', requestOptions)
+                fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
                 .then(data => navigate(data + "/exercise"));
             });
         } else {
