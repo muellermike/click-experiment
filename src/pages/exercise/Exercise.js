@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+import { storeExperimentId } from '../../actions';
 
 function Exercise() {
     let navigate = useNavigate();
@@ -31,7 +32,7 @@ function Exercise() {
         .then(data => {
             setExercise(data)
             });
-    }, [experimentId]);
+    }, [experimentId, dispatch, globalState]);
 
     const handleSubmit = (recording) => {
         if(recording.recording && recording.timeToRecording) {
@@ -52,16 +53,20 @@ function Exercise() {
                     headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE }
                 };
                 
-                // load exercise data from the api the next time
+                // load next exercise data from the api
                 fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId + '/' + globalState.userId + '/exercises/next', requestOptions)
-                .then(response => response.json())
+                .then(response => {
+                    if(response.status === 204) {
+                        navigate("/thankyou");
+                    }
+                    response.json()
+                })
                 .then(data => {
                     setExercise(data)
                 });
             });
         } else {
             alert("you shall not pass");
-            //navigate("/participant");
         }
     }
 

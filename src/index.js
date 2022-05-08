@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import Exercise from "./pages/exercise/Exercise";
 import Introduction from './pages/introduction/Introduction';
 import ParticipantInfo from './pages/participant/ParticipantInfo';
+import ThankYou from './pages/thankyou/ThankYou';
 
 const store = createStore(allReducer, 
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -24,6 +25,7 @@ root.render(
           <Route path="" element={<Introduction />} />
           <Route path="participant" element={<ParticipantInfo />} />
           <Route path=":experimentId/exercise" element={<Exercise />} />
+          <Route path="thankyou" element={<ThankYou />} />
           <Route
             path="*"
             element={

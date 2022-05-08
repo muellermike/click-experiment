@@ -1,14 +1,26 @@
-import { useState } from "react";
+import { useState, React, useEffect } from "react";
 import { Button, Card, FloatingLabel, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { storeExternalUserId } from '../../actions';
 
 function ParticipantIdentifier() {
+
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+    }
+    
     const [validated, setValidated] = useState(false);
     const [extUserId, setExtUserId] = useState("");
     let navigate = useNavigate();
     const dispatch = useDispatch();
+    let query = useQuery();
+
+    useEffect(() => {
+        if (query.get("unipark-id")) {
+            setExtUserId(query.get("unipark-id"))
+        }
+    }, [query])
 
     const handleSumbit = (event) => {
         const form = event.currentTarget;
@@ -28,6 +40,7 @@ function ParticipantIdentifier() {
     */
     return (
         <div>
+            {query.get("unipark-id")}
             <Card>
                 <Card.Title>Participate in the experiment</Card.Title>
                 <Card.Body>
@@ -35,7 +48,7 @@ function ParticipantIdentifier() {
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group>
                             <FloatingLabel label="UniPark-ID">
-                                <Form.Control required type="text" placeholder="12345" onChange={e => setExtUserId(e.target.value)} />
+                                <Form.Control required type="text" placeholder="12345" onChange={e => setExtUserId(e.target.value)} value={extUserId} disabled={query.get("unipark-id")} />
                                 <Form.Control.Feedback type="invalid">Please provide a UniPark-ID!</Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>

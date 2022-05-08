@@ -65,9 +65,9 @@ class AudioInput extends React.Component {
                 this.props.setAudioRecording(true);
                 let reader = new FileReader();
                 reader.readAsDataURL(blob);
-                reader.onload = () => {
+                reader.onloadend = () => {
                     this.setState({ base64String: reader.result.split(",")[1] });
-                    this.props.setValue(this.state.base64String, this.state.endTime - this.state.startTime);
+                    this.props.setValue(reader.result.split(",")[1], this.state.endTime - this.state.startTime);
                 }
             }).catch((e) => console.log(e));
     }
