@@ -6,14 +6,19 @@ import ExperimentDescription from "../../components/ExperimentDescription/Experi
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 
 function Exercise() {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
     const { experimentId } = useParams();
     const [exercise, setExercise] = useState({});
+    const globalState = useSelector(state => state.userInfoState);
 
     // lade die nächste "Aufgabe" über das API
     useEffect(() => {
+        dispatch(storeExperimentId(experimentId));
+
         const requestOptions = {
             mode: 'cors',
             method: 'GET',
@@ -21,7 +26,7 @@ function Exercise() {
         };
 
         // load exercise data from the API the first time
-        fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId  + '/15/exercises/next', requestOptions)
+        fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId + '/' + globalState.userId + '/exercises/next', requestOptions)
         .then(response => response.json())
         .then(data => {
             setExercise(data)
@@ -35,21 +40,20 @@ function Exercise() {
             const requestOptions = {
                 mode: 'cors',
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" },
-                body: JSON.stringify({ recording: recording.recording, timeToRecording: recording.timeToRecording, userId: 15, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
+                headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
+                body: JSON.stringify({ recording: recording.recording, timeToRecording: recording.timeToRecording, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
             };
             fetch(process.env.REACT_APP_API_BASE_URL + '/recordings', requestOptions)
             .then(response => response.json())
             .then(data =>  {
-                alert("sent recording " + data);
                 const requestOptions = {
                     mode: 'cors',
                     method: 'GET',
-                    headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" }
+                    headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE }
                 };
                 
                 // load exercise data from the api the next time
-                fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId  + '/15/exercises/next', requestOptions)
+                fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId + '/' + globalState.userId + '/exercises/next', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     setExercise(data)

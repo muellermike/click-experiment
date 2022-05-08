@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Button, Card, FloatingLabel, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { storeExternalUserId } from '../../actions';
 
 function ParticipantIdentifier() {
     const [validated, setValidated] = useState(false);
+    const [extUserId, setExtUserId] = useState("");
     let navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSumbit = (event) => {
         const form = event.currentTarget;
@@ -12,7 +16,7 @@ function ParticipantIdentifier() {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            // TODO: save id into reducer or so
+            dispatch(storeExternalUserId(extUserId));
             navigate("/participant");
         }
 
@@ -31,7 +35,7 @@ function ParticipantIdentifier() {
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group>
                             <FloatingLabel label="UniPark-ID">
-                                <Form.Control required type="text" placeholder="12345" />
+                                <Form.Control required type="text" placeholder="12345" onChange={e => setExtUserId(e.target.value)} />
                                 <Form.Control.Feedback type="invalid">Please provide a UniPark-ID!</Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>

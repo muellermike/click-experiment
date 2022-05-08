@@ -2,16 +2,20 @@ import { Col, Form, Row, Button, Spinner, Card } from "react-bootstrap";
 import AudioInput from "../../components/AudioInput/AudioInput";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { storeUserId } from '../../actions';
 import "./ParticipantInfo.css";
 
 // redux: https://levelup.gitconnected.com/react-redux-hooks-useselector-and-usedispatch-f7d8c7f75cdd
 function ParticipantInfo() {
 
     let navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isGenderRecorded, setGenderRecorded] = useState(false);
     const [isAgeRecorded, setAgeRecorded] = useState(false);
     const [ageRecording, setAgeRecording] = useState(null);
     const [genderRecording, setGenderRecording] = useState(null);
+    const globalState = useSelector(state => state.userInfoState);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -20,13 +24,13 @@ function ParticipantInfo() {
             const requestOptions = {
                 mode: 'cors',
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" },
-                body: JSON.stringify({ id: 1234, age: ageRecording, gender: genderRecording })
+                headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
+                body: JSON.stringify({ id: globalState.externalUserId, age: ageRecording, gender: genderRecording })
             };
             fetch(process.env.REACT_APP_API_BASE_URL + '/users', requestOptions)
             .then(response => response.json())
             .then(data =>  {
-                alert("hello " + data);
+                dispatch(storeUserId(data));
                 requestOptions.body = JSON.stringify({ user: data, start: new Date()});
                 fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
                 .then(data => navigate(data + "/exercise"));

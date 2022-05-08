@@ -4,17 +4,24 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { createStore } from 'redux';
+import allReducer from './reducers/root_reducers';
+import { Provider } from 'react-redux';
 import Exercise from "./pages/exercise/Exercise";
 import Introduction from './pages/introduction/Introduction';
 import ParticipantInfo from './pages/participant/ParticipantInfo';
+
+const store = createStore(allReducer, 
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={ <App />}>
-          <Route path="introduction" element={<Introduction />} />
+        <Route path="/" element={<Provider store={store}> <App /></Provider>}>
+          <Route path="" element={<Introduction />} />
           <Route path="participant" element={<ParticipantInfo />} />
           <Route path=":experimentId/exercise" element={<Exercise />} />
           <Route
