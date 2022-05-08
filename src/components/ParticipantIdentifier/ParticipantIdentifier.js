@@ -13,7 +13,7 @@ function ParticipantIdentifier() {
             event.stopPropagation();
         } else {
             // TODO: save id into reducer or so
-            navigate("/exercises/1");
+            navigate("/participant");
         }
 
         setValidated(true);
@@ -27,12 +27,12 @@ function ParticipantIdentifier() {
             <Card>
                 <Card.Title>Participate in the experiment</Card.Title>
                 <Card.Body>
-                    <p>Please provide the ID from Prolific.</p>
+                    <p>Please provide the ID from UniPark.</p>
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group>
-                            <FloatingLabel label="Prolific-ID">
+                            <FloatingLabel label="UniPark-ID">
                                 <Form.Control required type="text" placeholder="12345" />
-                                <Form.Control.Feedback type="invalid">Please provide a Prolific-ID!</Form.Control.Feedback>
+                                <Form.Control.Feedback type="invalid">Please provide a UniPark-ID!</Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
                         <Button variant="primary" style={{ margin: "25px"}} type="submit">Next</Button>

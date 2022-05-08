@@ -1,23 +1,26 @@
 import "./AnswerForm.css";
 import { Button, Form, Spinner } from "react-bootstrap";
 import AudioInput from "../AudioInput/AudioInput";
-import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 function AnswerForm(props) {
-    const params = useParams();
-    let navigate = useNavigate();
     const [isRecorded, setRecorded] = useState(false);
+    const [recording, setRecording] = useState({});
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let parsedId = parseInt(params.exerciseId);
-        setRecorded(false);
-        navigate("/exercises/" + (parsedId+1));
+        props.onSubmit(recording);
     }
 
     const setAudioRecording = (value) => {
         setRecorded(value);    
+    }
+
+    const handleExerciseRecording = (recording, timeToRecording) => {
+        setRecording({
+            "recording": recording,
+            "timeToRecording": timeToRecording
+        });
     }
 
     // show form to input audio file
@@ -26,7 +29,7 @@ function AnswerForm(props) {
             <Form className="vertical-center">
                 <Form.Group className="mb-3" controlId="formBasicAudio">
                     <Form.Label>Please answer the question with an audio input. Please check your surrounding.</Form.Label><br />
-                    <AudioInput setAudioRecording={setAudioRecording}></AudioInput>
+                    <AudioInput setAudioRecording={setAudioRecording} setValue={handleExerciseRecording}></AudioInput>
                     <Form.Text className="text-muted">
                         We'll never share your voice input with anyone else.
                     </Form.Text>

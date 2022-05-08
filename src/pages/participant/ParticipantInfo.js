@@ -8,16 +8,57 @@ import "./ParticipantInfo.css";
 function ParticipantInfo() {
 
     let navigate = useNavigate();
-    const [isRecorded, setRecorded] = useState(false);
+    const [isGenderRecorded, setGenderRecorded] = useState(false);
+    const [isAgeRecorded, setAgeRecorded] = useState(false);
+    const [ageRecording, setAgeRecording] = useState(null);
+    const [genderRecording, setGenderRecording] = useState(null);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setRecorded(false);
-        navigate("/exercise/1");
+        if(genderRecording  && ageRecording) {
+            // POST user and recordings
+            const requestOptions = {
+                mode: 'cors',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-API-KEY': "test_value" },
+                body: JSON.stringify({ id: 1234, age: ageRecording, gender: genderRecording })
+            };
+            fetch('http://localhost:8080/v1/users', requestOptions)
+            .then(response => response.json())
+            .then(data =>  {
+                alert("hello " + data);
+                requestOptions.body = JSON.stringify({ user: data, start: new Date()});
+                fetch('http://localhost:8080/v1/experiments', requestOptions)
+                .then(data => navigate(data + "/exercise"));
+            });
+        } else {
+            alert("you shall not pass");
+            navigate("/participant");
+        }
     }
 
-    const setAudioRecording = (value) => {
-        setRecorded(value);
+    const handleGenderRecording = (recording, timeToRecording) => {
+        setGenderRecording({
+            timeToRecording: timeToRecording,
+            recording: recording
+        });
+        console.log(genderRecording);
+    }
+
+    const handleAgeRecording = (recording, timeToRecording) => {
+        setAgeRecording({
+            timeToRecording: timeToRecording,
+            recording: recording
+        });
+        console.log(ageRecording);
+    }
+
+    const setGenderAudioRecording = (value) => {
+        setGenderRecorded(value);
+    }
+
+    const setAgeAudioRecording = (value) => {
+        setAgeRecorded(value);
     }
 
     // check cards (Header and Footer): https://react-bootstrap.github.io/components/cards/#header-and-footer
@@ -32,28 +73,47 @@ function ParticipantInfo() {
             </p>
             <Card>
                 <Form className="form-container">
-                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalGender">
-                        <Form.Label column sm={4}>Gender</Form.Label>
-                        <Col sm={8}>
-                            <AudioInput setAudioRecording={setAudioRecording} showPlayAudio></AudioInput>
+                    <Row>
+                        <Form.Group as={Col} className="mb-3 no-padding" controlId="formHorizontalGender">
+                            <Card className="participant-card">
+                                <Card.Header as="h5">Gender</Card.Header>
+                                <Card.Body>
+                                    <Card.Title>Provide your gender through speech</Card.Title>
+                                    <Card.Text>
+                                        Please answer with a sentence like: "I am a female"
+                                    </Card.Text>
+                                    <AudioInput setAudioRecording={setGenderAudioRecording} showPlayAudio setValue={handleGenderRecording}></AudioInput>
+                                </Card.Body>
+                            </Card>
+                        </Form.Group>
+                        <Form.Group as={Col} className="mb-3" controlId="formHorizontalAge">
+                            {(genderRecording) ? 
+                            <Card className="participant-card">
+                                <Card.Header as="h5">Age</Card.Header>
+                                <Card.Body>
+                                    <Card.Title>Provide your age through speech</Card.Title>
+                                    <Card.Text>
+                                        Please answer with a sentence like: "I am 25 years old"
+                                    </Card.Text>
+                                    <AudioInput setAudioRecording={setAgeAudioRecording} showPlayAudio setValue={handleAgeRecording}></AudioInput>
+                                </Card.Body>
+                            </Card> : ""}
+                        </Form.Group>
+                    </Row>
+                    <Row className="button-row">
+                        <Col>
+                            <Button variant="primary" disabled={!(isGenderRecorded && isAgeRecorded)} type="submit" onClick={handleSubmit}>
+                                { false ? <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                /> : '' }
+                                Submit
+                            </Button>
                         </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalAge">
-                        <Form.Label column sm={4}>Age</Form.Label>
-                        <Col sm={8}>
-                            <AudioInput setAudioRecording={setAudioRecording} showPlayAudio></AudioInput>
-                        </Col>
-                    </Form.Group>
-                    <Button variant="primary" disabled={!isRecorded} type="submit" onClick={handleSubmit}>
-                        { false ? <Spinner
-                        as="span"
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                        /> : '' }
-                        Submit
-                    </Button>
+                    </Row>
                 </Form>
             </Card>
         </div>

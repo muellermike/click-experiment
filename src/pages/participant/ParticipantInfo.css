@@ -2,6 +2,10 @@
     margin-right: 25px;
 }
 
-.form-container {
-    max-width: 500px;
+.participant-card {
+    padding: 0px;
+}
+
+.button-row {
+    margin-bottom: 20px;
 }

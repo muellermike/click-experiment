@@ -16,7 +16,7 @@ root.render(
         <Route path="/" element={ <App />}>
           <Route path="introduction" element={<Introduction />} />
           <Route path="participant" element={<ParticipantInfo />} />
-          <Route path="exercises/:exerciseId" element={<Exercise />} />
+          <Route path=":experimentId/exercise" element={<Exercise />} />
           <Route
             path="*"
             element={

@@ -20,18 +20,15 @@ class AudioInput extends React.Component {
         this.state = {
             isRecording: false,
             blobURL: '',
-            isBlocked: false
+            isBlocked: false,
+            startTime: '',
+            endTime: ''
         };
 
         // bind methods to the current state
-        this.removeActivity = this.removeActivity.bind(this);
         this.startRecording = this.startRecording.bind(this);
         this.stopRecording = this.stopRecording.bind(this);
         this.playBlob = this.playBlob.bind(this);
-    }
-
-    removeActivity(aId) {
-        this.props.remove(aId);
     }
 
     /*
@@ -62,9 +59,16 @@ class AudioInput extends React.Component {
             .stop()
             .getMp3()
             .then(([buffer, blob]) => {
+                this.setState({ endTime: new Date()})
                 const blobURL = URL.createObjectURL(blob)
                 this.setState({ blobURL: blobURL, isRecording: false, blob: blob });
                 this.props.setAudioRecording(true);
+                let reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = () => {
+                    this.setState({ base64String: reader.result.split(",")[1] });
+                    this.props.setValue(this.state.base64String, this.state.endTime - this.state.startTime);
+                }
             }).catch((e) => console.log(e));
     }
 
@@ -91,6 +95,7 @@ class AudioInput extends React.Component {
     componentDidMount() {
         // check audio recording permission
         this.checkAudioPermission()
+        this.setState( {startTime: new Date()});
     }
 
     /*
@@ -105,7 +110,7 @@ class AudioInput extends React.Component {
     }
 
     /*
-    *   Eender buttons which show the recording and pause icon
+    *   Render buttons which show the recording and pause icon
     */
     render(){
         return (
