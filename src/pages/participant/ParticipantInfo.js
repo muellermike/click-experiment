@@ -19,8 +19,6 @@ function ParticipantInfo() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(genderRecording);
-        console.log(ageRecording);
         if(genderRecording  && ageRecording) {
             // POST user and recordings
             const requestOptions = {
@@ -31,25 +29,31 @@ function ParticipantInfo() {
             };
             fetch(process.env.REACT_APP_API_BASE_URL + '/users', requestOptions)
             .then(response => {
-                alert(response.status);
                 if(response.status !== 200) {
-                    throw new Error("Something");
+                    throw new Error("Server Error");
                 }
-                response.json();
+
+                return response.json();
             })
             .then(data =>  {
-                alert(data);
                 dispatch(storeUserId(data));
                 requestOptions.body = JSON.stringify({ user: data, start: new Date()});
                 fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
-                .then(data => navigate(data + "/exercise"));
+                .then(response => {
+                    alert(response.status);
+                    if(response.status !== 200) {
+                        throw new Error("Server Error");
+                    }
+
+                    return response.json();
+                })
+                .then(data => navigate("/" + data + "/exercise"));
             })
             .catch(function(err) {
-                navigate("/");
+                navigate("/error");
             });
         } else {
             alert("you shall not pass");
-            navigate("/participant");
         }
     }
 

@@ -28,15 +28,25 @@ function Exercise() {
 
         // load exercise data from the API the first time
         fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId + '/' + globalState.userId + '/exercises/next', requestOptions)
-        .then(response => response.json())
+        .then(response => {
+            if(response.status !== 200) {
+                throw new Error("Server Error");
+            } else if(response.status === 204) {
+                navigate("/thankyou");
+            }
+
+            return response.json();
+        })
         .then(data => {
             setExercise(data)
-            });
-    }, [experimentId, dispatch, globalState]);
+        })
+        .catch(function(err) {
+            navigate("/error");
+        });
+    }, [experimentId]);
 
     const handleSubmit = (recording) => {
         if(recording.recording && recording.timeToRecording) {
-            console.log(recording,recording);
             // POST recording
             const requestOptions = {
                 mode: 'cors',
@@ -45,7 +55,13 @@ function Exercise() {
                 body: JSON.stringify({ recording: recording.recording, timeToRecording: recording.timeToRecording, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
             };
             fetch(process.env.REACT_APP_API_BASE_URL + '/recordings', requestOptions)
-            .then(response => response.json())
+            .then(response => {
+                if(response.status !== 200) {
+                    throw new Error("Server Error");
+                }
+
+                return response.json();
+            })
             .then(data =>  {
                 const requestOptions = {
                     mode: 'cors',
@@ -56,14 +72,20 @@ function Exercise() {
                 // load next exercise data from the api
                 fetch(process.env.REACT_APP_API_BASE_URL + '/experiments/' + experimentId + '/' + globalState.userId + '/exercises/next', requestOptions)
                 .then(response => {
-                    if(response.status === 204) {
+                    if (response.status === 204) {
                         navigate("/thankyou");
+                    } else if (response.status !== 200) {
+                        throw new Error("Server Error");
                     }
-                    response.json()
+
+                    return response.json();
                 })
                 .then(data => {
                     setExercise(data)
                 });
+            })
+            .catch(function(err) {
+                navigate("/error");
             });
         } else {
             alert("you shall not pass");
