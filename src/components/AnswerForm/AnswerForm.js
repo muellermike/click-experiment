@@ -19,7 +19,8 @@ function AnswerForm(props) {
     const handleExerciseRecording = (recording, timeToRecording) => {
         setRecording({
             "recording": recording,
-            "timeToRecording": timeToRecording
+            "timeToRecording": timeToRecording,
+            "endTime": new Date()
         });
     }
 
@@ -28,7 +29,7 @@ function AnswerForm(props) {
         <div>
             <Form className="vertical-center">
                 <Form.Group className="mb-3" controlId="formBasicAudio">
-                    <Form.Label>Please answer the question with an audio input. Please check your surrounding.</Form.Label><br />
+                    <Form.Label>Please answer the question with an audio input in a sentence like "There are more dots on the right / left side". Please check your surrounding.</Form.Label><br />
                     <AudioInput setAudioRecording={setAudioRecording} setValue={handleExerciseRecording}></AudioInput>
                     <Form.Text className="text-muted">
                         We'll never share your voice input with anyone else.

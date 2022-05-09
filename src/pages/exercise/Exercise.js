@@ -1,5 +1,5 @@
 import "./Exercise.css";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, ProgressBar, Row } from "react-bootstrap";
 import QuestionImage from "../../components/QuestionImage/QuestionImage";
 import AnswerForm from "../../components/AnswerForm/AnswerForm";
 import ExperimentDescription from "../../components/ExperimentDescription/ExperimentDescription";
@@ -14,6 +14,8 @@ function Exercise() {
     const dispatch = useDispatch();
     const { experimentId } = useParams();
     const [exercise, setExercise] = useState({});
+    const [startTime, setStartTime] = useState(new Date());
+    const [count, setCount] = useState(1);
     const globalState = useSelector(state => state.userInfoState);
 
     // lade die nächste "Aufgabe" über das API
@@ -38,7 +40,8 @@ function Exercise() {
             return response.json();
         })
         .then(data => {
-            setExercise(data)
+            setExercise(data);
+            setStartTime(new Date());
         })
         .catch(function(err) {
             navigate("/error");
@@ -52,7 +55,7 @@ function Exercise() {
                 mode: 'cors',
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
-                body: JSON.stringify({ recording: recording.recording, timeToRecording: recording.timeToRecording, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
+                body: JSON.stringify({ recording: recording.recording, timeToRecording: recording.endTime - startTime, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
             };
             fetch(process.env.REACT_APP_API_BASE_URL + '/recordings', requestOptions)
             .then(response => {
@@ -81,7 +84,9 @@ function Exercise() {
                     return response.json();
                 })
                 .then(data => {
-                    setExercise(data)
+                    setExercise(data);
+                    setStartTime(new Date());
+                    setCount(count + 1);
                 });
             })
             .catch(function(err) {
@@ -96,6 +101,11 @@ function Exercise() {
     return (
         <div>
             <Container>
+                <Row>
+                    <Col>
+                        <ProgressBar now={count / process.env.REACT_APP_NUM_EX}></ProgressBar>
+                    </Col>
+                </Row>
                 <Row className="Container-Row">
                     <Col xs={12} sm={12} md={7}>
                         <QuestionImage question={exercise.question} image={"data:" + exercise.mimeType + ";base64, " + exercise.encodedString} />
