@@ -37,7 +37,7 @@ function ParticipantInfo() {
             })
             .then(data =>  {
                 dispatch(storeUserId(data));
-                requestOptions.body = JSON.stringify({ user: data, start: new Date()});
+                requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString()});
                 fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
                 .then(response => {
                     alert(response.status);
