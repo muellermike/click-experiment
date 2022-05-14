@@ -103,7 +103,7 @@ function Exercise() {
             <Container>
                 <Row>
                     <Col>
-                        <ProgressBar now={count / process.env.REACT_APP_NUM_EX}></ProgressBar>
+                        <ProgressBar now={(count / process.env.REACT_APP_NUM_EX) * 100}></ProgressBar>
                     </Col>
                 </Row>
                 <Row className="Container-Row">

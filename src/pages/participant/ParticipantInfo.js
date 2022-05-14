@@ -40,7 +40,6 @@ function ParticipantInfo() {
                 requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString()});
                 fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
                 .then(response => {
-                    alert(response.status);
                     if(response.status !== 200) {
                         throw new Error("Server Error");
                     }
