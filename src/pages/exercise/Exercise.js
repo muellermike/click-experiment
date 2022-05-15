@@ -19,8 +19,10 @@ function Exercise() {
     const globalState = useSelector(state => state.userInfoState);
 
     // lade die nächste "Aufgabe" über das API
+
+    dispatch(storeExperimentId(experimentId));
+
     useEffect(() => {
-        dispatch(storeExperimentId(experimentId));
 
         const requestOptions = {
             mode: 'cors',
@@ -46,7 +48,7 @@ function Exercise() {
         .catch(function(err) {
             navigate("/error");
         });
-    }, [experimentId]);
+    }, [experimentId, globalState.userId, navigate]);
 
     const handleSubmit = (recording) => {
         if(recording.recording && recording.timeToRecording) {
