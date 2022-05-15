@@ -31,10 +31,10 @@ function ThankYou() {
                                 <Card.Subtitle className="mb-2 text-muted">based on your answers</Card.Subtitle>
                                 <Card.Body>
                                     <Card.Text>
-                                        The payment will be proceeded to you Uni-Park account. <br />
+                                        The payment will be proceeded to your Uni-Park account. <br />
                                         You provided the ID: {globalState.externalUserId}.
                                     </Card.Text>
-                                    <Button variant="primary">Go back to Uni-Park</Button>
+                                    <Button variant="primary" href={"https://google.ch/search?q=" + globalState.externalUserId}>Go back to Uni-Park</Button>
                                 </Card.Body>
                             </Card>
                         </Col>
