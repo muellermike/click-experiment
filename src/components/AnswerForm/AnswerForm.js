@@ -10,6 +10,7 @@ function AnswerForm(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.onSubmit(recording);
+        setRecorded(false);
     }
 
     const setAudioRecording = (value) => {
