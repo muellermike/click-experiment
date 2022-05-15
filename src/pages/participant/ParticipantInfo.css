@@ -4,6 +4,7 @@
 
 .participant-card {
     padding: 0px;
+    max-width: 100%;
 }
 
 .button-row {

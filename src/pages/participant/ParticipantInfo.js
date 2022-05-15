@@ -92,7 +92,7 @@ function ParticipantInfo() {
             <Card>
                 <Form className="form-container">
                     <Row>
-                        <Form.Group as={Col} className="mb-3 no-padding" controlId="formHorizontalGender">
+                        <Form.Group className=" no-padding" controlId="formHorizontalGender">
                             <Card className="participant-card">
                                 <Card.Header as="h5">Gender</Card.Header>
                                 <Card.Body>
@@ -104,7 +104,7 @@ function ParticipantInfo() {
                                 </Card.Body>
                             </Card>
                         </Form.Group>
-                        <Form.Group as={Col} className="mb-3" controlId="formHorizontalAge">
+                        <Form.Group className="mb-3" controlId="formHorizontalAge">
                             {(genderRecording) ? 
                             <Card className="participant-card">
                                 <Card.Header as="h5">Age</Card.Header>

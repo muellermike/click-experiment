@@ -20,9 +20,9 @@ function Exercise() {
 
     // lade die nächste "Aufgabe" über das API
 
-    dispatch(storeExperimentId(experimentId));
-
     useEffect(() => {
+
+        dispatch(storeExperimentId(experimentId));
 
         const requestOptions = {
             mode: 'cors',
@@ -48,7 +48,7 @@ function Exercise() {
         .catch(function(err) {
             navigate("/error");
         });
-    }, [experimentId, globalState.userId, navigate]);
+    }, [experimentId, globalState.userId, navigate, dispatch]);
 
     const handleSubmit = (recording) => {
         if(recording.recording && recording.timeToRecording) {
@@ -105,7 +105,7 @@ function Exercise() {
             <Container>
                 <Row>
                     <Col>
-                        <ProgressBar now={(count / process.env.REACT_APP_NUM_EX) * 100}></ProgressBar>
+                        <ProgressBar now={(count / process.env.REACT_APP_NUM_EX) * 100} label={(count / process.env.REACT_APP_NUM_EX) * 100 + " %"}></ProgressBar>
                     </Col>
                 </Row>
                 <Row className="Container-Row">
