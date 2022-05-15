@@ -1,0 +1,9 @@
+.Container-Row {
+    margin-bottom: 25px;
+}
+
+@media (min-width: 768px) {
+    .Container-Col {
+        position: relative;
+    }
+}
