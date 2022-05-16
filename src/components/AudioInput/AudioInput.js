@@ -51,7 +51,6 @@ class AudioInput extends React.Component {
 
     /*
     *   Stop recording and store blob into URL in current state
-    *   TODO: make blob / buffer storable in API
     */
     stopRecording() {
         console.log("Recording stopped.");
@@ -77,7 +76,7 @@ class AudioInput extends React.Component {
     */
     checkAudioPermission() {
         // check if the permission for the microphone is allowed in the browser
-        navigator.getUserMedia({ audio: true },
+        navigator.mediaDevices.getUserMedia({ audio: true },
             () => {
                 console.log("Permission Granted");
                 this.setState({ isBlocked: false });
