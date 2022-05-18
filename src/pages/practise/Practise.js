@@ -2,7 +2,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import QuestionImage from "../../components/QuestionImage/QuestionImage";
 import AnswerForm from "../../components/AnswerForm/AnswerForm";
 import ExperimentDescription from "../../components/ExperimentDescription/ExperimentDescription";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import ex1 from "../../assets/images/ex17.PNG";
@@ -10,9 +10,6 @@ import ex2 from "../../assets/images/ex19.PNG";
 
 function Practise() {
     let navigate = useNavigate();
-    const [exercise, setExercise] = useState({});
-    const [count, setCount] = useState(1);
-    const globalState = useSelector(state => state.userInfoState);
 
     const exercises = [{
         question: "Where are more dots?",
@@ -21,12 +18,10 @@ function Practise() {
         question: "Where are more dots?",
         image: ex2
     }];
-    
-    // lade / setze die nächste "Übungsaufgabe"
 
-    useEffect(() => {
-        setExercise(exercises[0]);
-    }, []);
+    const [exercise, setExercise] = useState(exercises[0]);
+    const [count, setCount] = useState(1);
+    const globalState = useSelector(state => state.userInfoState);
 
     const handleSubmit = (recording) => {
         if(recording.recording && recording.timeToRecording) {
