@@ -46,7 +46,9 @@ function ParticipantInfo() {
 
                     return response.json();
                 })
-                .then(data => navigate("/" + data + "/exercise"));
+                //.then(data => navigate("/" + data + "/exercise"));
+                // TODO: store experiment-id (data) into reducer for later usage
+                .then(data => navigate("/practise-intro"));
             })
             .catch(function(err) {
                 navigate("/error");
