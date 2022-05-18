@@ -10,7 +10,7 @@ function ThankYou() {
     */
     return (
         <div>
-            <h1>THANK YOU very much for having concluded our NLP Experiment</h1>
+            <h1>THANK YOU very much for having concluded the Dots Experiment</h1>
             <div>
                 <p>We hope you had pleasure filling it out.</p>
                 <Container>
