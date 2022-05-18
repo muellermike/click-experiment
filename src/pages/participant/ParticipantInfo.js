@@ -3,7 +3,7 @@ import AudioInput from "../../components/AudioInput/AudioInput";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { storeUserId } from '../../actions';
+import { storeExperimentId, storeUserId } from '../../actions';
 import "./ParticipantInfo.css";
 
 // redux: https://levelup.gitconnected.com/react-redux-hooks-useselector-and-usedispatch-f7d8c7f75cdd
@@ -48,7 +48,10 @@ function ParticipantInfo() {
                 })
                 //.then(data => navigate("/" + data + "/exercise"));
                 // TODO: store experiment-id (data) into reducer for later usage
-                .then(data => navigate("/practise-intro"));
+                .then(data => {
+                    dispatch(storeExperimentId(data))
+                    navigate("/practise-intro");
+                });
             })
             .catch(function(err) {
                 navigate("/error");

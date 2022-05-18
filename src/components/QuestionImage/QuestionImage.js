@@ -3,7 +3,7 @@ import "./QuestionImage.css";
 import { Card } from "react-bootstrap";
 
 class QuestionImage extends React.Component {
-    imageDuration = 2000;
+    imageDuration = 5000;
 
     constructor(props){
         super(props);

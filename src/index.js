@@ -13,6 +13,7 @@ import ParticipantInfo from './pages/participant/ParticipantInfo';
 import ThankYou from './pages/thankyou/ThankYou';
 import Error from './pages/error/Error';
 import PractiseIntroduction from './pages/practise-introduction/PractiseIntroduction';
+import Practise from './pages/practise/Practise';
 
 const store = createStore(allReducer, 
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -27,6 +28,7 @@ root.render(
           <Route path="" element={<Introduction />} />
           <Route path="participant" element={<ParticipantInfo />} />
           <Route path="practise-intro" element={<PractiseIntroduction />} />
+          <Route path="practise" element={<Practise />} />
           <Route path=":experimentId/exercise" element={<Exercise />} />
           <Route path="thankyou" element={<ThankYou />} />
           <Route path="error" element={<Error />} />
