@@ -40,7 +40,6 @@ function ParticipantIdentifier() {
     */
     return (
         <div>
-            {query.get("unipark-id")}
             <Card>
                 <Card.Title>Participate in the experiment</Card.Title>
                 <Card.Body>

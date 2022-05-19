@@ -47,7 +47,6 @@ function ParticipantInfo() {
                     return response.json();
                 })
                 //.then(data => navigate("/" + data + "/exercise"));
-                // TODO: store experiment-id (data) into reducer for later usage
                 .then(data => {
                     dispatch(storeExperimentId(data))
                     navigate("/practise-intro");
