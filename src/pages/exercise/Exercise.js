@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { storeExperimentId } from '../../actions';
 
 function Exercise() {
     let navigate = useNavigate();
@@ -21,8 +20,6 @@ function Exercise() {
     // lade die nächste "Aufgabe" über das API
 
     useEffect(() => {
-
-        dispatch(storeExperimentId(experimentId));
 
         const requestOptions = {
             mode: 'cors',
@@ -102,6 +99,7 @@ function Exercise() {
     // Daten anzeigen
     return (
         <div>
+            <h1>Experiment Game</h1>
             <Container>
                 <Row>
                     <Col>

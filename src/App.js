@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          NLP Experiment
+          Dots Experiment
         </p>
       </header>
       <div className="App-body">

@@ -16,11 +16,11 @@ const userInfoReducer = (state = initialState, action) => {
                 ...state,
                 externalUserId: action.data.externalUserId
             };;
-            case "STORE_EXPERIMENTID":
-                return {
-                    ...state,
-                    experimentId: action.data.experimentId
-                };;
+        case "STORE_EXPERIMENTID":
+            return {
+                ...state,
+                experimentId: action.data.experimentId
+            };;
         case "RELEASE_USER_INFO":
             return initialState;
         default:

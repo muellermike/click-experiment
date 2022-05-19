@@ -3,6 +3,8 @@ import "./QuestionImage.css";
 import { Card } from "react-bootstrap";
 
 class QuestionImage extends React.Component {
+    imageDuration = 5000;
+
     constructor(props){
         super(props);
 
@@ -26,7 +28,7 @@ class QuestionImage extends React.Component {
                 this.setState({
                     timeIsUp: true
                    });
-               }, 2000);
+               }, this.imageDuration);
          }
     }
 
@@ -35,7 +37,7 @@ class QuestionImage extends React.Component {
             this.setState({
                 timeIsUp: true
                });
-           }, 2000);
+           }, this.imageDuration);
     }
 
     /*
