@@ -1,3 +1,4 @@
+import "./Practise.css";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import QuestionImage from "../../components/QuestionImage/QuestionImage";
 import AnswerForm from "../../components/AnswerForm/AnswerForm";
@@ -39,7 +40,6 @@ function Practise() {
     }
 
     const startExperiment = () => {
-        alert(globalState.experimentId);
         // navigate to the experiment
         navigate("/" + globalState.experimentId + "/exercise")
     }
@@ -47,13 +47,17 @@ function Practise() {
     // Daten anzeigen
     return (
         <div>
+            <h1>Practise Game</h1>
             <Container>
                 <Row className="Container-Row">
                     <Col xs={12} sm={12} md={7}>
                         <QuestionImage question={exercise.question} image={exercise.image} />
                     </Col>
                     <Col className="Container-Col">
-                        <AnswerForm onSubmit={handleSubmit} />
+                        <div className="Answer-Part">
+                            <p>You're in the practise mode. Start the experiment game below. </p>
+                            <AnswerForm onSubmit={handleSubmit} />
+                        </div>
                     </Col>
                 </Row>
                 <Row>

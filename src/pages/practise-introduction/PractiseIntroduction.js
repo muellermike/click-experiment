@@ -24,7 +24,10 @@ function PractiseIntroduction() {
                             <Card.Body>
                                 <p>In the next step you have the chance to test the experiment.</p>
                                 <p>You will see the dots game almost as it is during the experiemnt. The only difference is that there are more hints how the user interface works.</p>
-                                <p>Take your time to figure out how the user interface works and how you can interact with it. During the practise game you have the opportunity to reload the task. This functionality won't be possible during the real experiment.</p>
+                                <p>Take your time to figure out how the user interface works and how you can interact with it. The practise game does not influence the payment.</p>
+                                <p>The dots image is only visible for about 5 seconds. Please make sure you look at the picture to decide what to answer.</p>
+                                <p>Afterwards, press the green microphone button to start recording. Once you finished speaking, press the yellow pause button. Then, you can submit your recorded answer.</p>
+                                <p>Once you are ready, scroll down to start the experiment.</p>
                                 <Button variant="primary" onClick={handleClickNext} >Go to the practise game</Button>
                             </Card.Body>
                         </Card>

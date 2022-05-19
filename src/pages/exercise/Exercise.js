@@ -99,6 +99,7 @@ function Exercise() {
     // Daten anzeigen
     return (
         <div>
+            <h1>Experiment Game</h1>
             <Container>
                 <Row>
                     <Col>
