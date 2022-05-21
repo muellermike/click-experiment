@@ -21,7 +21,6 @@ function ParticipantInfo() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert("let's send it");
         // POST user
         const requestOptions = {
             mode: 'cors',
@@ -29,7 +28,7 @@ function ParticipantInfo() {
             headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
             body: JSON.stringify({ id: globalState.externalUserId, age: age, gender: gender })
         };
-        alert(process.env.REACT_APP_API_BASE_URL);
+        
         fetch(process.env.REACT_APP_API_BASE_URL + '/users', requestOptions)
         .then(response => {
             if(response.status !== 200) {
@@ -41,7 +40,7 @@ function ParticipantInfo() {
         .then(data =>  {
             dispatch(storeUserId(data));
             requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString()});
-            alert("experiments API");
+            
             fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
             .then(response => {
                 if(response.status !== 200) {
@@ -51,8 +50,7 @@ function ParticipantInfo() {
                 return response.json();
             })
             .then(data => {
-                dispatch(storeExperimentId(data))
-                alert("go to practise intro");
+                dispatch(storeExperimentId(data));
                 navigate("/practise-intro");
             });
         })
