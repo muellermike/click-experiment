@@ -10,7 +10,7 @@ function ExperimentDescription() {
                     <Accordion.Header>Experiment Rules</Accordion.Header>
                     <Accordion.Body>
                     You have to solve the task by answering whether there are more dots on the right or left side.
-                    Therefore, please answer in a sentence such as "There are more dots on the right / left side".
+                    Therefore, please press the corresponding button for left and right.
                     Note that we are going to pay according to your mentioned result and not whether the result was correct.
                     In other words, when the true result was right but you stated left we pay you the amount for the answer left.
                     </Accordion.Body>

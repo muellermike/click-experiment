@@ -47,16 +47,17 @@ function Exercise() {
         });
     }, [experimentId, globalState.userId, navigate, dispatch]);
 
-    const handleSubmit = (recording) => {
-        if(recording.recording && recording.timeToRecording) {
+    const handleSubmit = (answer) => {
+        if(answer) {
+            console.log(startTime);
             // POST recording
             const requestOptions = {
                 mode: 'cors',
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
-                body: JSON.stringify({ recording: recording.recording, timeToRecording: recording.endTime - startTime, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
+                body: JSON.stringify({ answer: answer, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
             };
-            fetch(process.env.REACT_APP_API_BASE_URL + '/recordings', requestOptions)
+            fetch(process.env.REACT_APP_API_BASE_URL + '/exercises', requestOptions)
             .then(response => {
                 if(response.status !== 200) {
                     throw new Error("Server Error");

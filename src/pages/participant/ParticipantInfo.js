@@ -16,7 +16,7 @@ function ParticipantInfo() {
     const genders = [
         { name: "Female", value: "female" },
         { name: "Male", value: "male" },
-        { name: "Divers", value: "divers" }
+        { name: "Diverse", value: "diverse" }
     ];
 
     const handleSubmit = (event) => {

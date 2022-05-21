@@ -24,9 +24,9 @@ function Practise() {
     const [count, setCount] = useState(1);
     const globalState = useSelector(state => state.userInfoState);
 
-    const handleSubmit = (recording) => {
-        if(recording.recording && recording.timeToRecording) {
-            // forget recording and show next practise-exercise
+    const handleSubmit = (answer) => {
+        if(answer) {
+            // forget answer and show next practise-exercise
             if(count === (exercises.length - 1)) {
                 setExercise(exercises[0]);
                 setCount(0);
@@ -61,7 +61,7 @@ function Practise() {
                     </Col>
                 </Row>
                 <Row>
-                    You can keep going submitting those practise answers as long as you like. As soon as you hit the button below, the dots game as the experiment starts.
+                    You can keep submitting those practise answers as long as you like. As soon as you hit the button below, the dots game as the experiment starts.
                     <Button variant="primary" onClick={startExperiment}>Start the experiment</Button>
                 </Row>
             </Container>
