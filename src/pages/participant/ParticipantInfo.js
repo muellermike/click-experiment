@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { storeExperimentId, storeUserId } from '../../actions';
 import "./ParticipantInfo.css";
 
-// redux: https://levelup.gitconnected.com/react-redux-hooks-useselector-and-usedispatch-f7d8c7f75cdd
 function ParticipantInfo() {
 
     let navigate = useNavigate();
