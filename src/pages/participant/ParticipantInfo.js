@@ -1,33 +1,47 @@
-import { Col, Form, Row, Button, Spinner, Card } from "react-bootstrap";
-import AudioInput from "../../components/AudioInput/AudioInput";
+import { Col, Form, Row, Button, ButtonGroup, Card, FloatingLabel, ToggleButton } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { storeExperimentId, storeUserId } from '../../actions';
 import "./ParticipantInfo.css";
 
-// redux: https://levelup.gitconnected.com/react-redux-hooks-useselector-and-usedispatch-f7d8c7f75cdd
 function ParticipantInfo() {
 
     let navigate = useNavigate();
     const dispatch = useDispatch();
-    const [isGenderRecorded, setGenderRecorded] = useState(false);
-    const [isAgeRecorded, setAgeRecorded] = useState(false);
-    const [ageRecording, setAgeRecording] = useState(null);
-    const [genderRecording, setGenderRecording] = useState(null);
+    const [age, setAge] = useState("");
+    const [gender, setGender] = useState("");
     const globalState = useSelector(state => state.userInfoState);
+
+    const genders = [
+        { name: "Female", value: "female" },
+        { name: "Male", value: "male" },
+        { name: "Diverse", value: "diverse" }
+    ];
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(genderRecording  && ageRecording) {
-            // POST user and recordings
-            const requestOptions = {
-                mode: 'cors',
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
-                body: JSON.stringify({ id: globalState.externalUserId, age: ageRecording, gender: genderRecording })
-            };
-            fetch(process.env.REACT_APP_API_BASE_URL + '/users', requestOptions)
+        // POST user
+        const requestOptions = {
+            mode: 'cors',
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
+            body: JSON.stringify({ id: globalState.externalUserId, age: age, gender: gender })
+        };
+        
+        fetch(process.env.REACT_APP_API_BASE_URL + '/users', requestOptions)
+        .then(response => {
+            if(response.status !== 200) {
+                throw new Error("Server Error");
+            }
+
+            return response.json();
+        })
+        .then(data =>  {
+            dispatch(storeUserId(data));
+            requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString()});
+            
+            fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
             .then(response => {
                 if(response.status !== 200) {
                     throw new Error("Server Error");
@@ -35,105 +49,75 @@ function ParticipantInfo() {
 
                 return response.json();
             })
-            .then(data =>  {
-                dispatch(storeUserId(data));
-                requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString()});
-                fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
-                .then(response => {
-                    if(response.status !== 200) {
-                        throw new Error("Server Error");
-                    }
-
-                    return response.json();
-                })
-                //.then(data => navigate("/" + data + "/exercise"));
-                .then(data => {
-                    dispatch(storeExperimentId(data))
-                    navigate("/practise-intro");
-                });
-            })
-            .catch(function(err) {
-                navigate("/error");
+            .then(data => {
+                dispatch(storeExperimentId(data));
+                navigate("/practise-intro");
             });
-        } else {
-            alert("you shall not pass");
-        }
-    }
-
-    const handleGenderRecording = (recording, timeToRecording) => {
-        setGenderRecording({
-            timeToRecording: timeToRecording,
-            recording: recording
+        })
+        .catch(function(err) {
+            navigate("/error");
         });
     }
 
-    const handleAgeRecording = (recording, timeToRecording) => {
-        setAgeRecording({
-            timeToRecording: timeToRecording,
-            recording: recording
-        });
-        console.log(ageRecording);
-    }
-
-    const setGenderAudioRecording = (value) => {
-        setGenderRecorded(value);
-    }
-
-    const setAgeAudioRecording = (value) => {
-        setAgeRecorded(value);
-    }
-
-    // check cards (Header and Footer): https://react-bootstrap.github.io/components/cards/#header-and-footer
-    // show data to receive participant information
+    // show form to receive participant information
     return (
         <div>
-            <h2>Microphone Check and Participant Information</h2><br />
+            <h2>Participant Information</h2><br />
             <p>
-                To check the audio for the experiment please test below. Additionally, please provide information about yourself. 
-                All data is being recorded anonymously. We never have the possibility to find out who you are.
-                Please answer the question with an audio input. Please check your surrounding.
+                Please provide information about yourself. Both, gender and age are required.
+                All data is being collected anonymously. We never have the possibility to find out who you are.
+                Please answer the question with a either a text or number input.
             </p>
             <Card>
                 <Form className="form-container">
                     <Row>
-                        <Form.Group className=" no-padding" controlId="formHorizontalGender">
+                        <Form.Group className="no-padding" controlId="formHorizontalGender">
                             <Card className="participant-card">
                                 <Card.Header as="h5">Gender</Card.Header>
                                 <Card.Body>
-                                    <Card.Title>Provide your gender through speech</Card.Title>
+                                    <Card.Title>Provide your gender</Card.Title>
                                     <Card.Text>
-                                        Please answer with a sentence like: "I am a female"
+                                        Please select your gender.
                                     </Card.Text>
-                                    <AudioInput setAudioRecording={setGenderAudioRecording} showPlayAudio setValue={handleGenderRecording}></AudioInput>
+                                    <ButtonGroup>
+                                        {genders.map((g, idx) => (
+                                        <ToggleButton
+                                            required
+                                            key={idx}
+                                            id={`radio-${idx}`}
+                                            type="radio"
+                                            variant={'outline-success'}
+                                            name="radio"
+                                            value={g.value}
+                                            checked={gender === g.value}
+                                            onChange={(e) => setGender(e.currentTarget.value)}
+                                        >
+                                            {g.name}
+                                        </ToggleButton>
+                                        ))}
+                                    </ButtonGroup>                                    
                                 </Card.Body>
                             </Card>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formHorizontalAge">
-                            {(genderRecording) ? 
                             <Card className="participant-card">
                                 <Card.Header as="h5">Age</Card.Header>
                                 <Card.Body>
-                                    <Card.Title>Provide your age through speech</Card.Title>
+                                    <Card.Title>Provide your age</Card.Title>
                                     <Card.Text>
-                                        Please answer with a sentence like: "I am 25 years old"
+                                        Please only provide your current age as a number.
                                     </Card.Text>
-                                    <AudioInput setAudioRecording={setAgeAudioRecording} showPlayAudio setValue={handleAgeRecording}></AudioInput>
+                                    <FloatingLabel label="Your Age">
+                                        <Form.Control required type="number" placeholder="26" onChange={e => setAge(e.target.value)} value={age} />
+                                        <Form.Control.Feedback type="invalid">Please provide your age!</Form.Control.Feedback>
+                                    </FloatingLabel>
                                 </Card.Body>
-                            </Card> : ""}
+                            </Card>
                         </Form.Group>
                     </Row>
                     <Row className="button-row">
                         <Col>
-                            <Button variant="primary" disabled={!(isGenderRecorded && isAgeRecorded)} type="submit" onClick={handleSubmit}>
-                                { false ? <Spinner
-                                as="span"
-                                animation="border"
-                                size="sm"
-                                role="status"
-                                aria-hidden="true"
-                                /> : '' }
-                                Submit
-                            </Button>
+                            <Button variant="primary" type="submit" disabled={!gender | !age} onClick={handleSubmit}>Submit</Button>
                         </Col>
                     </Row>
                 </Form>
