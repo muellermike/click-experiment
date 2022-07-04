@@ -116,7 +116,7 @@ function ParticipantInfo() {
                                         Please only provide your current age as a number.
                                     </Card.Text>
                                     <FloatingLabel label="Your Age">
-                                        <Form.Control required type="number" placeholder="26" onChange={e => setAge(e.target.value)} value={age} />
+                                        <Form.Control required type="number" placeholder="26" disabled={age > 14 && age < 100} onChange={e => setAge(e.target.value)} value={age} />
                                         <Form.Control.Feedback type="invalid">Please provide your age!</Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Card.Body>
