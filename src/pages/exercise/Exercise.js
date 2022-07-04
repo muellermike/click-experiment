@@ -3,6 +3,7 @@ import { Col, Container, ProgressBar, Row } from "react-bootstrap";
 import QuestionImage from "../../components/QuestionImage/QuestionImage";
 import AnswerForm from "../../components/AnswerForm/AnswerForm";
 import ExperimentDescription from "../../components/ExperimentDescription/ExperimentDescription";
+import ImportantInformation from "../../components/ImportantInformation/ImportantInformation";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +14,9 @@ function Exercise() {
     const dispatch = useDispatch();
     const { experimentId } = useParams();
     const [exercise, setExercise] = useState({});
-    const [startTime, setStartTime] = useState(new Date());
     const [count, setCount] = useState(1);
     const globalState = useSelector(state => state.userInfoState);
+    const imageState = useSelector(state => state.imageState);
 
     // lade die nächste "Aufgabe" über das API
 
@@ -40,7 +41,6 @@ function Exercise() {
         })
         .then(data => {
             setExercise(data);
-            setStartTime(new Date());
         })
         .catch(function(err) {
             navigate("/error");
@@ -49,13 +49,12 @@ function Exercise() {
 
     const handleSubmit = (answer) => {
         if(answer) {
-            console.log(startTime);
             // POST recording
             const requestOptions = {
                 mode: 'cors',
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
-                body: JSON.stringify({ answer: answer, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
+                body: JSON.stringify({ answer: answer, userId: globalState.userId, time: new Date().toISOString(), experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
             };
             fetch(process.env.REACT_APP_API_BASE_URL + '/exercises', requestOptions)
             .then(response => {
@@ -85,7 +84,6 @@ function Exercise() {
                 })
                 .then(data => {
                     setExercise(data);
-                    setStartTime(new Date());
                     setCount(count + 1);
                 });
             })
@@ -103,20 +101,23 @@ function Exercise() {
             <h1>Experiment Game</h1>
             <Container>
                 <Row>
+                    <ImportantInformation></ImportantInformation>
+                    <ExperimentDescription></ExperimentDescription>
+                </Row>
+                <Row>
                     <Col>
                         <ProgressBar now={(count / process.env.REACT_APP_NUM_EX) * 100} label={(count / process.env.REACT_APP_NUM_EX) * 100 + " %"}></ProgressBar>
                     </Col>
                 </Row>
                 <Row className="Container-Row">
                     <Col xs={12} sm={12} md={7}>
-                        <QuestionImage question={exercise.question} image={"data:" + exercise.mimeType + ";base64, " + exercise.encodedString} />
+                        <QuestionImage question={exercise.question} image={"data:" + exercise.mimeType + ";base64, " + exercise.encodedString} imageDuration={imageState.imageTime} />
                     </Col>
                     <Col className="Container-Col">
                         <AnswerForm onSubmit={handleSubmit} />
                     </Col>
                 </Row>
-            </Container>
-            <ExperimentDescription></ExperimentDescription>            
+            </Container>        
         </div>
     )
 }

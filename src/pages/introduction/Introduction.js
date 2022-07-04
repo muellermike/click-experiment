@@ -19,9 +19,8 @@ function Introduction() {
                             <Card>
                                 <Card.Title>Dots Game</Card.Title>
                                 <Card.Body>
-                                    <p>In this game you will see a box with multiple red dots in it (see example below).</p>
-                                    <p>You will only see the dots for about 5 seconds, and once they disappear your task is to indicate whether there were more dots on the right side of the square or on the left side of the square (note that sometimes a dot will be on the line between two parts). You indicate this by clicking the answer button you like.</p>
-                                    <p>Before starting the experiment game you have to provide your gender and age.</p>
+                                    <p>This is the experiment platform in which the described experiment takes place. Please take your time to conclude the experiment.</p>
+                                    <p>The picture below shows an image as it will be presented in the experiment.</p>
                                 </Card.Body>
                                 <div>
                                     <Card.Img variant="bottom" src={exampleImg} />
@@ -34,7 +33,7 @@ function Introduction() {
                                 <Card.Subtitle className="mb-2 text-muted">based on your answers</Card.Subtitle>
                                 <Card.Body>
                                     <p>You are being paid according to your provided answer. We do not check whether your answer was correct or not.</p>
-                                    <p>If you show by clicking that it has more dots on the rigth side you are being paid 1 Swiss Franc. When you select the left side with more dots we pay you 0.5 Swiss Francs.</p>
+                                    <p><b>If you answer by clicking that it has more dots on the rigth side you are being paid 10 Cents. When you select the left side with more dots we pay you 1 Cent.</b></p>
                                 </Card.Body>
                             </Card>
                             <ParticipantIdentifier></ParticipantIdentifier>
