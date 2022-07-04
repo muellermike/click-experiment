@@ -2,7 +2,7 @@ import { useState, React, useEffect } from "react";
 import { Button, Card, FloatingLabel, Form } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { storeExternalUserId } from '../../actions';
+import { storeExternalUserId, storeImageTime } from '../../actions';
 
 function ParticipantIdentifier() {
 
@@ -17,8 +17,8 @@ function ParticipantIdentifier() {
     let query = useQuery();
 
     useEffect(() => {
-        if (query.get("unipark-id")) {
-            setExtUserId(query.get("unipark-id"))
+        if (query.get("id_user")) {
+            setExtUserId(query.get("id_user"))
         }
     }, [query])
 
@@ -29,6 +29,9 @@ function ParticipantIdentifier() {
             event.stopPropagation();
         } else {
             dispatch(storeExternalUserId(extUserId));
+            if (query.get("img_tm")) {
+                dispatch(storeImageTime(query.get("img_tm") * 1000));
+            }
             navigate("/participant");
         }
 
