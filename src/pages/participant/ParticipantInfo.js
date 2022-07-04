@@ -1,9 +1,10 @@
-import { Col, Form, Row, Button, ButtonGroup, Card, FloatingLabel, ToggleButton } from "react-bootstrap";
+import { Col, Form, Row, Button, ButtonGroup, Card, FloatingLabel, ToggleButton, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { storeExperimentId, storeUserId } from '../../actions';
 import "./ParticipantInfo.css";
+import { HiOutlineBadgeCheck } from "react-icons/hi";
 
 function ParticipantInfo() {
 
@@ -84,6 +85,7 @@ function ParticipantInfo() {
                                         {genders.map((g, idx) => (
                                         <ToggleButton
                                             required
+                                            disabled={gender}
                                             key={idx}
                                             id={`radio-${idx}`}
                                             type="radio"
@@ -96,11 +98,16 @@ function ParticipantInfo() {
                                             {g.name}
                                         </ToggleButton>
                                         ))}
-                                    </ButtonGroup>                                    
+                                    </ButtonGroup>
+                                    { gender !== "" ? 
+                                    <Alert key={"success"} variant={"success"}>
+                                        <HiOutlineBadgeCheck size={"2em"} /> Already answered!
+                                    </Alert> : "" }
                                 </Card.Body>
                             </Card>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formHorizontalAge">
+                            { gender !== "" ?
                             <Card className="participant-card">
                                 <Card.Header as="h5">Age</Card.Header>
                                 <Card.Body>
@@ -113,7 +120,7 @@ function ParticipantInfo() {
                                         <Form.Control.Feedback type="invalid">Please provide your age!</Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Card.Body>
-                            </Card>
+                            </Card> : "" }
                         </Form.Group>
                     </Row>
                     <Row className="button-row">
