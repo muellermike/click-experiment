@@ -13,7 +13,7 @@ function ParticipantInfo() {
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
     const [startTimeAge, setStartTimeAge] = useState(new Date());
-    const [startTimeGender, setStartTimeGender] = useState(new Date());
+    const [startTimeGender] = useState(new Date());
     const [clickTimeGender, setClickTimeGender] = useState(null);
     const [endTimeAge, setEndTimeAge] = useState(null);
     const globalState = useSelector(state => state.userInfoState);
@@ -27,7 +27,6 @@ function ParticipantInfo() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        endTime = new Date();
         // POST user
         const requestOptions = {
             mode: 'cors',
