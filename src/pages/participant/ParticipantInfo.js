@@ -80,7 +80,7 @@ function ParticipantInfo() {
                                     <Card.Text>
                                         Please select your gender.
                                     </Card.Text>
-                                    <ButtonGroup>
+                                    <ButtonGroup className="gender-btn-group">
                                         {genders.map((g, idx) => (
                                         <ToggleButton
                                             required

@@ -14,3 +14,9 @@
 .checkbox-understand-group {
     align-content: flex-start;
 }
+
+@media (max-width: 500px) {
+    .gender-btn-group {
+        display: grid;
+    }
+}
