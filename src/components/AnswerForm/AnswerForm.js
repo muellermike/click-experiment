@@ -1,22 +1,26 @@
 import "./AnswerForm.css";
-import { Button, ButtonGroup, Form, ToggleButton } from "react-bootstrap";
+import { Alert, Button, ButtonGroup, Form, ToggleButton } from "react-bootstrap";
+import { HiOutlineBadgeCheck } from "react-icons/hi";
 import { useState } from "react";
 
 function AnswerForm(props) {
     const initialAnswer = "";
     const [isAnswered, setAnswered] = useState(false);
     const [answer, setAnswer] = useState(initialAnswer);
+    const [clickTime, setClickTime] = useState(null);
+    const [startTime, setStartTime] = useState(new Date());
 
     const answers = [
-        { value: "left", name: "left" },
-        { value: "right", name: "right" }
+        { value: "left", name: "There are more dots on the left side." },
+        { value: "right", name: "There are more dots on the right side." }
     ];
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.onSubmit(answer);
+        props.onSubmit(answer, (clickTime - startTime), (new Date() - startTime));
         setAnswered(false);
         setAnswer(initialAnswer);
+        setStartTime(new Date());
     }
 
     // show form to input audio file
@@ -29,6 +33,7 @@ function AnswerForm(props) {
                         {answers.map((a, idx) => (
                         <ToggleButton
                             required
+                            disabled={isAnswered}
                             key={idx}
                             id={`radio-${idx}`}
                             type="radio"
@@ -37,6 +42,7 @@ function AnswerForm(props) {
                             value={a.value}
                             checked={answer === a.value}
                             onChange={(e) => {
+                                setClickTime(new Date());
                                 setAnswer(e.currentTarget.value);
                                 setAnswered(true);
                             }}
@@ -45,6 +51,10 @@ function AnswerForm(props) {
                         </ToggleButton>
                         ))}
                     </ButtonGroup>
+                    { isAnswered ? 
+                    <Alert key={"success"} variant={"success"}>
+                        <HiOutlineBadgeCheck size={"2em"} /> Already answered!
+                    </Alert> : "" }
                 </Form.Group>
                 <Button variant="primary" disabled={!isAnswered} type="submit" onClick={handleSubmit}>
                     Submit Answer

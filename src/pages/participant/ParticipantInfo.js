@@ -1,9 +1,10 @@
-import { Col, Form, Row, Button, ButtonGroup, Card, FloatingLabel, ToggleButton } from "react-bootstrap";
+import { Col, Form, Row, Button, ButtonGroup, Card, FloatingLabel, ToggleButton, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { storeExperimentId, storeUserId } from '../../actions';
 import "./ParticipantInfo.css";
+import { HiOutlineBadgeCheck } from "react-icons/hi";
 
 function ParticipantInfo() {
 
@@ -11,6 +12,10 @@ function ParticipantInfo() {
     const dispatch = useDispatch();
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
+    const [startTimeAge, setStartTimeAge] = useState(new Date());
+    const [startTimeGender] = useState(new Date());
+    const [clickTimeGender, setClickTimeGender] = useState(null);
+    const [endTimeAge, setEndTimeAge] = useState(null);
     const globalState = useSelector(state => state.userInfoState);
     const imageState = useSelector(state => state.imageState);
 
@@ -27,7 +32,14 @@ function ParticipantInfo() {
             mode: 'cors',
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
-            body: JSON.stringify({ id: globalState.externalUserId, age: age, gender: gender })
+            body: JSON.stringify({
+                id: globalState.externalUserId,
+                age: age,
+                timeToAgeEntry: (endTimeAge - startTimeAge),
+                gender: gender,
+                timeToGenderClick: (clickTimeGender - startTimeGender),
+                timeToSubmit: (new Date() - startTimeGender)
+            })
         };
         
         fetch(process.env.REACT_APP_API_BASE_URL + '/users', requestOptions)
@@ -80,10 +92,11 @@ function ParticipantInfo() {
                                     <Card.Text>
                                         Please select your gender.
                                     </Card.Text>
-                                    <ButtonGroup>
+                                    <ButtonGroup className="gender-btn-group">
                                         {genders.map((g, idx) => (
                                         <ToggleButton
                                             required
+                                            disabled={gender}
                                             key={idx}
                                             id={`radio-${idx}`}
                                             type="radio"
@@ -91,16 +104,25 @@ function ParticipantInfo() {
                                             name="radio"
                                             value={g.value}
                                             checked={gender === g.value}
-                                            onChange={(e) => setGender(e.currentTarget.value)}
+                                            onChange={(e) => {
+                                                setGender(e.currentTarget.value);
+                                                setClickTimeGender(new Date());
+                                                setStartTimeAge(new Date());
+                                            }}
                                         >
                                             {g.name}
                                         </ToggleButton>
                                         ))}
-                                    </ButtonGroup>                                    
+                                    </ButtonGroup>
+                                    { gender !== "" ? 
+                                    <Alert key={"success"} variant={"success"}>
+                                        <HiOutlineBadgeCheck size={"2em"} /> Already answered!
+                                    </Alert> : "" }
                                 </Card.Body>
                             </Card>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formHorizontalAge">
+                            { gender !== "" ?
                             <Card className="participant-card">
                                 <Card.Header as="h5">Age</Card.Header>
                                 <Card.Body>
@@ -109,11 +131,14 @@ function ParticipantInfo() {
                                         Please only provide your current age as a number.
                                     </Card.Text>
                                     <FloatingLabel label="Your Age">
-                                        <Form.Control required type="number" placeholder="26" onChange={e => setAge(e.target.value)} value={age} />
+                                        <Form.Control required type="number" placeholder="26" disabled={age > 14 && age < 100} onChange={e => {
+                                            setAge(e.target.value);
+                                            setEndTimeAge(new Date());
+                                        }} value={age} />
                                         <Form.Control.Feedback type="invalid">Please provide your age!</Form.Control.Feedback>
                                     </FloatingLabel>
                                 </Card.Body>
-                            </Card>
+                            </Card> : "" }
                         </Form.Group>
                     </Row>
                     <Row className="button-row">
