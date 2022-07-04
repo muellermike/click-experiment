@@ -54,7 +54,7 @@ function Exercise() {
                 mode: 'cors',
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'X-API-KEY': process.env.REACT_APP_API_KEY_VALUE },
-                body: JSON.stringify({ answer: answer, userId: globalState.userId, experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
+                body: JSON.stringify({ answer: answer, userId: globalState.userId, time: new Date().toISOString(), experimentId: parseInt(experimentId), exerciseId: parseInt(exercise.id) })
             };
             fetch(process.env.REACT_APP_API_BASE_URL + '/exercises', requestOptions)
             .then(response => {
