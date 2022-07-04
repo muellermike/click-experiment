@@ -7,6 +7,8 @@ function AnswerForm(props) {
     const initialAnswer = "";
     const [isAnswered, setAnswered] = useState(false);
     const [answer, setAnswer] = useState(initialAnswer);
+    const [clickTime, setClickTime] = useState(null);
+    const [startTime, setStartTime] = useState(new Date());
 
     const answers = [
         { value: "left", name: "There are more dots on the left side." },
@@ -15,9 +17,10 @@ function AnswerForm(props) {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.onSubmit(answer);
+        props.onSubmit(answer, (clickTime - startTime), (new Date() - startTime));
         setAnswered(false);
         setAnswer(initialAnswer);
+        setStartTime(new Date());
     }
 
     // show form to input audio file
@@ -39,6 +42,7 @@ function AnswerForm(props) {
                             value={a.value}
                             checked={answer === a.value}
                             onChange={(e) => {
+                                setClickTime(new Date());
                                 setAnswer(e.currentTarget.value);
                                 setAnswered(true);
                             }}
