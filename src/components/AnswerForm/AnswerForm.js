@@ -8,8 +8,8 @@ function AnswerForm(props) {
     const [answer, setAnswer] = useState(initialAnswer);
 
     const answers = [
-        { value: "left", name: "left" },
-        { value: "right", name: "right" }
+        { value: "left", name: "There are more dots on the left side." },
+        { value: "right", name: "There are more dots on the right side." }
     ];
     
     const handleSubmit = (event) => {
