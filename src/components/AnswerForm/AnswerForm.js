@@ -24,7 +24,7 @@ function AnswerForm(props) {
         <div>
             <Form className="vertical-center">
                 <Form.Group className="mb-3" controlId="formBasicAudio">
-                    <Form.Label>Please answer the question by clicking on one of the buttons below.</Form.Label><br />
+                    <Form.Label>Please answer the question by <b>clicking on one of the buttons</b> below.</Form.Label><br />
                     <ButtonGroup>
                         {answers.map((a, idx) => (
                         <ToggleButton
