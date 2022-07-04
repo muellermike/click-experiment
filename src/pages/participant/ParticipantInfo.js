@@ -12,6 +12,7 @@ function ParticipantInfo() {
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
     const globalState = useSelector(state => state.userInfoState);
+    const imageState = useSelector(state => state.imageState);
 
     const genders = [
         { name: "Female", value: "female" },
@@ -39,7 +40,7 @@ function ParticipantInfo() {
         })
         .then(data =>  {
             dispatch(storeUserId(data));
-            requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString()});
+            requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString(), imageTime: imageState.imageTime});
             
             fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
             .then(response => {
