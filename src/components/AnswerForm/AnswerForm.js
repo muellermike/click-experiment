@@ -1,5 +1,6 @@
 import "./AnswerForm.css";
-import { Button, ButtonGroup, Form, ToggleButton } from "react-bootstrap";
+import { Alert, Button, ButtonGroup, Form, ToggleButton } from "react-bootstrap";
+import { HiOutlineBadgeCheck } from "react-icons/hi";
 import { useState } from "react";
 
 function AnswerForm(props) {
@@ -29,6 +30,7 @@ function AnswerForm(props) {
                         {answers.map((a, idx) => (
                         <ToggleButton
                             required
+                            disabled={isAnswered}
                             key={idx}
                             id={`radio-${idx}`}
                             type="radio"
@@ -45,6 +47,10 @@ function AnswerForm(props) {
                         </ToggleButton>
                         ))}
                     </ButtonGroup>
+                    { isAnswered ? 
+                    <Alert key={"success"} variant={"success"}>
+                        <HiOutlineBadgeCheck size={"2em"} /> Already answered!
+                    </Alert> : "" }
                 </Form.Group>
                 <Button variant="primary" disabled={!isAnswered} type="submit" onClick={handleSubmit}>
                     Submit Answer
