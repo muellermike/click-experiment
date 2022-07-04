@@ -1,5 +1,5 @@
 import "./Practise.css";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Fade, Row } from "react-bootstrap";
 import QuestionImage from "../../components/QuestionImage/QuestionImage";
 import AnswerForm from "../../components/AnswerForm/AnswerForm";
 import ExperimentDescription from "../../components/ExperimentDescription/ExperimentDescription";

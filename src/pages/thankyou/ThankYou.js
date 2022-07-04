@@ -1,5 +1,6 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useSelector } from 'react-redux';
+import { useEffect } from "react";
 import "./ThankYou.css";
 
 function ThankYou() {

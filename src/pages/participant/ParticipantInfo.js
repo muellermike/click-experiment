@@ -67,7 +67,7 @@ function ParticipantInfo() {
             <p>
                 Please provide information about yourself. Both, gender and age are required.
                 All data is being collected anonymously. We never have the possibility to find out who you are.
-                Please answer the question with a either a text or number input.
+                Please answer the question with either a text or number input.
             </p>
             <Card>
                 <Form className="form-container">

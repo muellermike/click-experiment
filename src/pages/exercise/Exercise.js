@@ -14,7 +14,6 @@ function Exercise() {
     const dispatch = useDispatch();
     const { experimentId } = useParams();
     const [exercise, setExercise] = useState({});
-    const [startTime, setStartTime] = useState(new Date());
     const [count, setCount] = useState(1);
     const globalState = useSelector(state => state.userInfoState);
     const imageState = useSelector(state => state.imageState);
@@ -42,7 +41,6 @@ function Exercise() {
         })
         .then(data => {
             setExercise(data);
-            setStartTime(new Date());
         })
         .catch(function(err) {
             navigate("/error");
@@ -86,7 +84,6 @@ function Exercise() {
                 })
                 .then(data => {
                     setExercise(data);
-                    setStartTime(new Date());
                     setCount(count + 1);
                 });
             })

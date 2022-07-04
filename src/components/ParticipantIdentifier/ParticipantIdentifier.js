@@ -50,7 +50,7 @@ function ParticipantIdentifier() {
                     <Form noValidate validated={validated} onSubmit={handleSumbit}>
                         <Form.Group>
                             <FloatingLabel label="UniPark-ID">
-                                <Form.Control required type="text" placeholder="12345" onChange={e => setExtUserId(e.target.value)} value={extUserId} disabled={query.get("unipark-id")} />
+                                <Form.Control required type="text" placeholder="12345" onChange={e => setExtUserId(e.target.value)} value={extUserId} disabled={query.get("id_user")} />
                                 <Form.Control.Feedback type="invalid">Please provide a UniPark-ID!</Form.Control.Feedback>
                             </FloatingLabel>
                         </Form.Group>
