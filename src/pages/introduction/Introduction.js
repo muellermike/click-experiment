@@ -33,7 +33,7 @@ function Introduction() {
                                 <Card.Subtitle className="mb-2 text-muted">based on your answers</Card.Subtitle>
                                 <Card.Body>
                                     <p>You are being paid according to your provided answer. We do not check whether your answer was correct or not.</p>
-                                    <p><b>If you answer by clicking that it has more dots on the rigth side you are being paid 10 Cents. When you select the left side with more dots we pay you 1 Cent.</b></p>
+                                    <p><b>If you answer by clicking that it has more dots on the rigth side you are being paid 5 Pence. When you select the left side with more dots we pay you 0.5 Penny.</b></p>
                                 </Card.Body>
                             </Card>
                             <ParticipantIdentifier></ParticipantIdentifier>
