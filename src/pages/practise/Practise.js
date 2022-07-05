@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import ex1 from "../../assets/images/ex17.PNG";
 import ex2 from "../../assets/images/ex19.PNG";
-import { HiArrowSmDown } from "react-icons/hi";
 import ImportantInformation from "../../components/ImportantInformation/ImportantInformation";
 
 function Practise() {
@@ -65,22 +64,17 @@ function Practise() {
                     </Col>
                     <Col className="Container-Col">
                         <div className="Answer-Part">
-                            <p>You're in the practise mode. You're answers are not stored.</p>
+                            <p>You're in the practise mode. Your answers are not stored.</p>
                             { !showArrow ? 
                             <AnswerForm onSubmit={handleSubmit} />
                             :
                             <Fade in={showArrow} timeout={500} >
                                 <div className="experiment-hint">
-                                    <HiArrowSmDown size={"2em"} />
-                                    Start the experiment below
+                                    <Button variant="primary" onClick={startExperiment}>Start the experiment</Button>
                                 </div>
                             </Fade>}
                         </div>
                     </Col>
-                </Row>
-                <Row>
-                    You can keep submitting those practise answers as long as you like. As soon as you hit the button below, the experiment with the dots game starts.
-                    <Button variant="primary" onClick={startExperiment}>Start the experiment</Button>
                 </Row>
             </Container>        
         </div>
