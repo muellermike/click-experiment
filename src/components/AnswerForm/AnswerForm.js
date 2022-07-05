@@ -11,8 +11,8 @@ function AnswerForm(props) {
     const [startTime, setStartTime] = useState(new Date());
 
     const answers = [
-        { value: "left", name: "There are more dots on the left side." },
-        { value: "right", name: "There are more dots on the right side." }
+        { value: "left", name: "There are more dots on the left side (payout 0.5 penny)." },
+        { value: "right", name: "There are more dots on the right side (paymout 5 pence)." }
     ];
     
     const handleSubmit = (event) => {
