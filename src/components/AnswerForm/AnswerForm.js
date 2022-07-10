@@ -11,8 +11,8 @@ function AnswerForm(props) {
     const [startTime, setStartTime] = useState(new Date());
 
     const answers = [
-        { value: "left", name: "There are more dots on the left side (payout 0.5 penny)." },
-        { value: "right", name: "There are more dots on the right side (paymout 5 pence)." }
+        { value: "left", name: "There are more dots on the left side (payout 0.5 Cents)." },
+        { value: "right", name: "There are more dots on the right side (payout 5 Cents)." }
     ];
     
     const handleSubmit = (event) => {
@@ -53,11 +53,11 @@ function AnswerForm(props) {
                     </ButtonGroup>
                     { isAnswered ? 
                     <Alert key={"success"} variant={"success"}>
-                        <HiOutlineBadgeCheck size={"2em"} /> Already answered!
+                        <HiOutlineBadgeCheck size={"2em"} /> Successfully answered!
                     </Alert> : "" }
                 </Form.Group>
                 <Button variant="primary" disabled={!isAnswered} type="submit" onClick={handleSubmit}>
-                    Submit Answer
+                    Play next round
                 </Button>
             </Form>
             
