@@ -20,9 +20,9 @@ function ParticipantInfo() {
     const imageState = useSelector(state => state.imageState);
 
     const genders = [
-        { name: "Female", value: "female" },
-        { name: "Male", value: "male" },
-        { name: "Diverse", value: "diverse" }
+        { name: "I am a female", value: "female" },
+        { name: "I am a male", value: "male" },
+        { name: "I am diverse", value: "diverse" }
     ];
 
     const handleSubmit = (event) => {
@@ -116,7 +116,7 @@ function ParticipantInfo() {
                                     </ButtonGroup>
                                     { gender !== "" ? 
                                     <Alert key={"success"} variant={"success"}>
-                                        <HiOutlineBadgeCheck size={"2em"} /> Already answered!
+                                        <HiOutlineBadgeCheck size={"2em"} /> Successfully answered!
                                     </Alert> : "" }
                                 </Card.Body>
                             </Card>
@@ -143,7 +143,7 @@ function ParticipantInfo() {
                     </Row>
                     <Row className="button-row">
                         <Col>
-                            <Button variant="primary" type="submit" disabled={!gender | !age} onClick={handleSubmit}>Submit</Button>
+                            <Button variant="primary" type="submit" disabled={!gender | !age} onClick={handleSubmit}>Go to practice game</Button>
                         </Col>
                     </Row>
                 </Form>
