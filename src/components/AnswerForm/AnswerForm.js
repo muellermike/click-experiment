@@ -11,8 +11,8 @@ function AnswerForm(props) {
     const [startTime, setStartTime] = useState(new Date());
 
     const answers = [
-        { value: "left", name: "There are more dots on the left side (payout 0.5 Cents)." },
-        { value: "right", name: "There are more dots on the right side (payout 5 Cents)." }
+        { value: "left", name: "There are more dots on the left side.", payout: "(payout 0.5 Cents)" },
+        { value: "right", name: "There are more dots on the right side.", payout: "(payout 5 Cents)" }
     ];
     
     const handleSubmit = (event) => {
@@ -47,7 +47,7 @@ function AnswerForm(props) {
                                 setAnswered(true);
                             }}
                         >
-                            {a.name}
+                            <b>{a.name}</b> <br /> {a.payout}
                         </ToggleButton>
                         ))}
                     </ButtonGroup>
