@@ -122,9 +122,11 @@ function Exercise() {
                         <QuestionImage question={exercise.question} image={"data:" + exercise.mimeType + ";base64, " + exercise.encodedString} imageDuration={imageState.imageTime} />
                     </Col>
                     <Col className="Container-Col">
-                        <h2>{exercise.question}</h2>
-                        <br />
-                        <AnswerForm onSubmit={handleSubmit} />
+                        <div className="Answer-Part">
+                            <h2>{exercise.question}</h2>
+                            <br />
+                            <AnswerForm onSubmit={handleSubmit} />
+                        </div>
                     </Col>
                 </Row>
             </Container>        
