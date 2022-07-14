@@ -55,7 +55,7 @@ function Practise() {
     // Daten anzeigen
     return (
         <div>
-            <h1>Practise Game</h1>
+            <h1>Practice Task of the Dots Estimation Experiment</h1>
             <Container>
                 <Row className="Container-Row">
                     <ImportantInformation></ImportantInformation>
@@ -67,6 +67,7 @@ function Practise() {
                     </Col>
                     <Col className="Container-Col">
                         <div className="Answer-Part">
+                            <h2>{exercise.question}</h2>
                             <p>You're in the practise mode. Your answers are not stored.</p>
                             { !showArrow ? 
                             <AnswerForm onSubmit={handleSubmit} />
