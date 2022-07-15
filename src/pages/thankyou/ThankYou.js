@@ -41,7 +41,7 @@ function ThankYou() {
                                 <Card.Body>
                                     <p>To finish the experiment, <b>you have to answer some concluding questions.</b></p>
                                     <p>To do so, <b>click the button below.</b></p>
-                                    <Button variant="primary" href={process.env.REACT_APP_UNIPARK_RET_LINK + "?return_tic=" + globalState.externalUserId}>Go back to Uni-Park</Button>
+                                    <Button variant="primary" href={process.env.REACT_APP_UNIPARK_RET_LINK + "?return_tic=" + globalState.externalUserId}>Go to concluding questions</Button>
                                 </Card.Body>
                             </Card>
                         </Col>
