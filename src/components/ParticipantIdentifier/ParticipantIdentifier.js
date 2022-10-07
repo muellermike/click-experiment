@@ -2,7 +2,7 @@ import { useState, React, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { storeExternalUserId, storeUserId, storeExperimentId, storeImageTime } from '../../actions';
+import { storeExternalUserId, storeUserId, storeExperimentId, storeImageTime, storeExpName } from '../../actions';
 
 function ParticipantIdentifier() {
 
@@ -12,22 +12,27 @@ function ParticipantIdentifier() {
     
     const [extUserId, setExtUserId] = useState("");
     const [imgTime, setImgTime] = useState(1000);
+    const [expName, setExpName] = useState("");
     let navigate = useNavigate();
     const dispatch = useDispatch();
     let query = useQuery();
 
     useEffect(() => {
         if (query.get("id_user")) {
-            setExtUserId(query.get("id_user"))
+            setExtUserId(query.get("id_user"));
         }
         if (query.get("img_tm")) {
             setImgTime(query.get("img_tm") * 1000);
+        }
+        if (query.get("exp_name")) {
+            setExpName(query.get("exp_name"));
         }
     }, [query])
 
     const handleSumbit = () => {
         dispatch(storeExternalUserId(extUserId));
         dispatch(storeImageTime(imgTime));
+        dispatch(storeExpName(expName));
         
         // POST user
         const requestOptions = {
