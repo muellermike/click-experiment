@@ -54,7 +54,12 @@ function ParticipantIdentifier() {
             })
             .then(data =>  {
                 dispatch(storeUserId(data));
-                requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString(), imageTime: imgTime});
+                requestOptions.body = JSON.stringify({ 
+                    user: data,
+                    start: new Date().toISOString(),
+                    imageTime: imgTime,
+                    experimentName: expName
+                });
                 
                 fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
                 .then(response => {
