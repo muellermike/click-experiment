@@ -18,6 +18,7 @@ function ParticipantInfo() {
     const [endTimeAge, setEndTimeAge] = useState(null);
     const globalState = useSelector(state => state.userInfoState);
     const imageState = useSelector(state => state.imageState);
+    const experimentState = useSelector(state => state.experimentState);
 
     const genders = [
         { name: "I am a female", value: "female" },
@@ -52,7 +53,12 @@ function ParticipantInfo() {
         })
         .then(data =>  {
             dispatch(storeUserId(data));
-            requestOptions.body = JSON.stringify({ user: data, start: new Date().toISOString(), imageTime: imageState.imageTime});
+            requestOptions.body = JSON.stringify({ 
+                user: data, 
+                start: new Date().toISOString(), 
+                imageTime: imageState.imageTime, 
+                experimentName: experimentState.experimentName
+            });
             
             fetch(process.env.REACT_APP_API_BASE_URL + '/experiments', requestOptions)
             .then(response => {
